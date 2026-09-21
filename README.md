@@ -37,6 +37,16 @@ It is suitable for:
 - JPG, PNG, and HEIF/HEIC import, plus PowerPoint, PDF, and image export.
 - Chinese and English interfaces, five coordinated themes, and high-DPI support.
 
+### Interface preview / 界面预览
+
+#### 中文界面
+
+![FrameDeck Studio 中文界面](assets/screenshots/framedeck-interface-zh.png)
+
+#### English interface
+
+![FrameDeck Studio English interface](assets/screenshots/framedeck-interface-en.png)
+
 ## v12.0.0 highlights
 
 - Auto Layout continuously fills the current rows × columns grid.
@@ -48,15 +58,30 @@ It is suitable for:
 - Batch titles, spacing controls, bilingual Chinese/English UI, and five themes.
 - HEIF/HEIC import when `pillow-heif` is available.
 
-## Download for Windows
+## Downloads / 下载
 
-Download the portable EXE and installer from the [v12.0.0 GitHub Release](https://github.com/lzy4107932-commits/FrameDeck-Studio/releases/tag/v12.0.0).
+Download the Windows and macOS packages from the unified [v12.0.0 GitHub Release](https://github.com/lzy4107932-commits/FrameDeck-Studio/releases/tag/v12.0.0).
+
+### Windows
 
 - **Portable**: run directly without Python.
 - **Installer**: installs the application and creates optional shortcuts.
 
 Windows 10/11 x64 is supported. The first release may show the Windows
 SmartScreen unknown-publisher prompt because the binaries are not code-signed.
+
+### macOS
+
+- **DMG**: recommended for normal installation.
+- **ZIP**: backup application archive.
+- **Architecture**: Apple Silicon ARM64 (M1, M2, M3, M4, and later).
+- **Minimum configured version**: macOS 12.
+
+The macOS build was manually installed and tested on a Mac mini with Apple M4,
+16 GB memory, and macOS 26.6.1. It is not code-signed or notarized. On first
+launch, copy the app to Applications, try to open it once, then use **System
+Settings → Privacy & Security → Open Anyway**. Do not disable Gatekeeper
+system-wide. See the [Chinese macOS installation guide](macOS安装说明.md).
 
 ## Run from source
 
@@ -87,30 +112,16 @@ Portable output is written to `dist/`. Installer output is written to
 `installer/output/`. Generated builds and user projects are excluded by
 `.gitignore`.
 
+## Build macOS packages
+
+Build locally on an Apple Silicon Mac with:
+
+```bash
+python3 -m pip install -r requirements-build.txt
+bash build_macos.sh
+```
+
 ## License
 
 FrameDeck Studio source code is released under the [MIT License](LICENSE).
 See [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md) for dependency notices.
-
-## macOS unsigned beta
-
-Download the [v12.0.0 macOS Beta 1 pre-release](https://github.com/lzy4107932-commits/FrameDeck-Studio/releases/tag/v12.0.0-macos-beta.1).
-
-- **DMG**: recommended for normal installation.
-- **ZIP**: contains the application bundle directly.
-- **Architecture**: Apple Silicon ARM64 (M1, M2, M3, M4, and later).
-- **Minimum configured version**: macOS 12.
-
-This beta is not code-signed or notarized and has not yet been manually tested
-on a physical Mac. Gatekeeper may block its first launch. Control-click or
-right-click the application in Finder, choose **Open**, and confirm. Do not
-disable Gatekeeper system-wide.
-
-Read the [macOS beta testing guide](MACOS_BETA_TESTING.md) before installing.
-Report a problem with the repository's **macOS Beta problem** issue form. Do
-not upload confidential projects or private source images.
-
-Build locally on macOS with:
-
-    python3 -m pip install -r requirements-build.txt
-    bash build_macos.sh
