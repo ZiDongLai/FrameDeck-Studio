@@ -80,14 +80,10 @@ jobs:
           file "$EXECUTABLE" | grep -q "x86_64"
           plutil -p "$APP/Contents/Info.plist"
           hdiutil verify "$OUTPUT_DIR/FrameDeck-Studio-v12.0.0-macOS-x86_64.dmg"
-          (
-            cd "$OUTPUT_DIR"
-            shasum -a 256 -c "SHA256SUMS-macOS-x86_64.txt"
-          )
+          shasum -a 256 -c "$OUTPUT_DIR/SHA256SUMS-macOS-x86_64.txt"
 
       - name: Smoke test packaged application
-        run: |
-          python3 tests/smoke_packaged_app.py             "dist/FrameDeck Studio.app/Contents/MacOS/FrameDeck Studio"
+        run: python3 tests/smoke_packaged_app.py "dist/FrameDeck Studio.app/Contents/MacOS/FrameDeck Studio"
 
       - name: Upload Intel test packages
         uses: actions/upload-artifact@v4
