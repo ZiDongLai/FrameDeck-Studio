@@ -1,0 +1,95 @@
+name: macOS Intel x86_64 Test Build
+
+permissions:
+  contents: read
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "**/*.py"
+      - "requirements*.txt"
+      - "FrameDeck Studio macOS.spec"
+      - "build_macos.sh"
+      - "resources/**"
+      - "Template/**"
+      - ".github/workflows/macos-intel-build.yml"
+
+jobs:
+  build-macos-intel:
+    runs-on: macos-15-intel
+    timeout-minutes: 60
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Intel Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          architecture: x64
+          cache: pip
+
+      - name: Verify runner and Python architecture
+        run: |
+          sw_vers
+          test "$(uname -m)" = "x86_64"
+          python3 - <<'PY'
+          import platform
+          import struct
+          print("platform:", platform.platform())
+          print("machine:", platform.machine())
+          print("pointer bits:", struct.calcsize("P") * 8)
+          assert platform.machine() == "x86_64"
+          assert struct.calcsize("P") * 8 == 64
+          PY
+
+      - name: Install build dependencies
+        run: |
+          python3 -m pip install --upgrade pip setuptools wheel
+          python3 -m pip install -r requirements-build.txt
+          python3 -m pip freeze
+
+      - name: Run regression tests
+        run: |
+          python3 -m unittest discover -s tests
+          python3 tests/integration_auto_layout_transaction.py
+          python3 tests/integration_editable_ppt_crop.py
+          python3 tests/integration_image_clipboard.py
+          python3 tests/integration_page_aware_image_drag.py
+          python3 tests/integration_theme_language.py
+
+      - name: Build Intel app, ZIP, and DMG
+        run: bash build_macos.sh
+
+      - name: Verify Intel bundle and packages
+        run: |
+          APP="dist/FrameDeck Studio.app"
+          EXECUTABLE="$APP/Contents/MacOS/FrameDeck Studio"
+          OUTPUT_DIR="release/v12.0.0/macos-x86_64"
+
+          test -d "$APP"
+          test -x "$EXECUTABLE"
+          test -f "$OUTPUT_DIR/FrameDeck-Studio-v12.0.0-macOS-x86_64.dmg"
+          test -f "$OUTPUT_DIR/FrameDeck-Studio-v12.0.0-macOS-x86_64.zip"
+          test -f "$OUTPUT_DIR/SHA256SUMS-macOS-x86_64.txt"
+
+          file "$EXECUTABLE"
+          file "$EXECUTABLE" | grep -q "x86_64"
+          plutil -p "$APP/Contents/Info.plist"
+          hdiutil verify "$OUTPUT_DIR/FrameDeck-Studio-v12.0.0-macOS-x86_64.dmg"
+          shasum -a 256 -c "$OUTPUT_DIR/SHA256SUMS-macOS-x86_64.txt"
+
+      - name: Smoke test packaged application
+        run: python3 tests/smoke_packaged_app.py "dist/FrameDeck Studio.app/Contents/MacOS/FrameDeck Studio"
+
+      - name: Upload Intel test packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: FrameDeck-Studio-v12.0.0-macOS-x86_64-unsigned-test
+          path: release/v12.0.0/macos-x86_64/**
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0
