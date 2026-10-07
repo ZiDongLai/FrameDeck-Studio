@@ -68,18 +68,18 @@ jobs:
         run: |
           APP="dist/FrameDeck Studio.app"
           EXECUTABLE="$APP/Contents/MacOS/FrameDeck Studio"
-          OUTPUT_DIR="release/v12.0.0/macos-x86_64"
+          OUTPUT_DIR="release/v12.1.0/macos-x86_64"
 
           test -d "$APP"
           test -x "$EXECUTABLE"
-          test -f "$OUTPUT_DIR/FrameDeck-Studio-v12.0.0-macOS-x86_64.dmg"
-          test -f "$OUTPUT_DIR/FrameDeck-Studio-v12.0.0-macOS-x86_64.zip"
+          test -f "$OUTPUT_DIR/FrameDeck-Studio-v12.1.0-macOS-x86_64.dmg"
+          test -f "$OUTPUT_DIR/FrameDeck-Studio-v12.1.0-macOS-x86_64.zip"
           test -f "$OUTPUT_DIR/SHA256SUMS-macOS-x86_64.txt"
 
           file "$EXECUTABLE"
           file "$EXECUTABLE" | grep -q "x86_64"
           plutil -p "$APP/Contents/Info.plist"
-          hdiutil verify "$OUTPUT_DIR/FrameDeck-Studio-v12.0.0-macOS-x86_64.dmg"
+          hdiutil verify "$OUTPUT_DIR/FrameDeck-Studio-v12.1.0-macOS-x86_64.dmg"
           shasum -a 256 -c "$OUTPUT_DIR/SHA256SUMS-macOS-x86_64.txt"
 
       - name: Smoke test packaged application
@@ -88,8 +88,8 @@ jobs:
       - name: Upload Intel test packages
         uses: actions/upload-artifact@v4
         with:
-          name: FrameDeck-Studio-v12.0.0-macOS-x86_64-unsigned-test
-          path: release/v12.0.0/macos-x86_64/**
+          name: FrameDeck-Studio-v12.1.0-macOS-x86_64-unsigned-test
+          path: release/v12.1.0/macos-x86_64/**
           if-no-files-found: error
           retention-days: 30
           compression-level: 0

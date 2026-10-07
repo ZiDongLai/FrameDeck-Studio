@@ -1,6 +1,6 @@
 # FrameDeck Studio macOS Intel版安装与测试说明
 
-适用安装包：`FrameDeck-Studio-v12.0.0-macOS-x86_64.dmg`
+适用安装包：`FrameDeck-Studio-v12.1.0-macOS-x86_64.dmg`
 
 适用设备：搭载 Intel Core i5、i7 或 i9 处理器的 Mac。Apple M1、M2、M3、M4 等设备应使用 arm64 版本。
 
@@ -28,7 +28,7 @@ x86_64
 2. 选择 **macOS Intel x86_64 Test Build**。
 3. 打开最新一次成功的运行记录。
 4. 在页面底部 **Artifacts** 区域下载：
-   `FrameDeck-Studio-v12.0.0-macOS-x86_64-unsigned-test`
+   `FrameDeck-Studio-v12.1.0-macOS-x86_64-unsigned-test`
 5. 解压下载的 Artifact，里面包含 DMG、ZIP 和 SHA-256 校验文件。
 6. 优先测试 DMG；ZIP 仅作为备用分发格式。
 
@@ -38,7 +38,7 @@ x86_64
 
 ```bash
 cd ~/Downloads
-shasum -a 256 "FrameDeck-Studio-v12.0.0-macOS-x86_64.dmg"
+   shasum -a 256 "FrameDeck-Studio-v12.1.0-macOS-x86_64.dmg"
 cat "SHA256SUMS-macOS-x86_64.txt"
 ```
 
@@ -47,7 +47,7 @@ DMG 对应的两段 SHA-256 必须一致。
 检查磁盘映像完整性：
 
 ```bash
-hdiutil verify "FrameDeck-Studio-v12.0.0-macOS-x86_64.dmg"
+hdiutil verify "FrameDeck-Studio-v12.1.0-macOS-x86_64.dmg"
 ```
 
 结果应包含 `VALID`。
