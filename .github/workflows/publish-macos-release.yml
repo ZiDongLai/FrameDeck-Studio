@@ -1,0 +1,63 @@
+name: Publish v12.1.0 macOS Release Assets
+
+on:
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: arm64
+            run_id: 37581629822
+            artifact: FrameDeck-Studio-v12.1.0-macOS-ARM64-unsigned-beta
+          - arch: x86_64
+            run_id: 37581629793
+            artifact: FrameDeck-Studio-v12.1.0-macOS-x86_64-unsigned-test
+    steps:
+      - name: Verify source run matches release tag
+        uses: actions/github-script@v7
+        env:
+          SOURCE_RUN: ${{ matrix.run_id }}
+        with:
+          script: |
+            const repo = context.repo;
+            const { data: run } = await github.rest.actions.getWorkflowRun({
+              ...repo, run_id: Number(process.env.SOURCE_RUN)
+            });
+            if (run.conclusion !== 'success') throw new Error('Source build did not succeed');
+            let { data: ref } = await github.rest.git.getRef({ ...repo, ref: 'tags/v12.1.0' });
+            let object = ref.object;
+            while (object.type === 'tag') {
+              const { data: tag } = await github.rest.git.getTag({ ...repo, tag_sha: object.sha });
+              object = tag.object;
+            }
+            if (object.type !== 'commit' || object.sha !== run.head_sha) {
+              throw new Error('Source build does not match v12.1.0');
+            }
+      - name: Download verified build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          run-id: ${{ matrix.run_id }}
+          github-token: ${{ github.token }}
+          path: release/v12.1.0
+      - name: Verify checksums and upload packages
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARCH: ${{ matrix.arch }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          directory="release/v12.1.0/macos-${ARCH}"
+          test -f "${directory}/FrameDeck-Studio-v12.1.0-macOS-${ARCH}.dmg"
+          test -f "${directory}/FrameDeck-Studio-v12.1.0-macOS-${ARCH}.zip"
+          sha256sum -c "${directory}/SHA256SUMS-macOS-${ARCH}.txt"
+          gh release upload v12.1.0 "${directory}"/* --repo "${REPOSITORY}"
