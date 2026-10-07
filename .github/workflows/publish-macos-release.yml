@@ -16,9 +16,11 @@ jobs:
       matrix:
         include:
           - arch: arm64
+            download_path: release/v12.1.0
             run_id: 37581629822
             artifact: FrameDeck-Studio-v12.1.0-macOS-ARM64-unsigned-beta
           - arch: x86_64
+            download_path: release/v12.1.0/macos-x86_64
             run_id: 37581629793
             artifact: FrameDeck-Studio-v12.1.0-macOS-x86_64-unsigned-test
     steps:
@@ -48,7 +50,7 @@ jobs:
           name: ${{ matrix.artifact }}
           run-id: ${{ matrix.run_id }}
           github-token: ${{ github.token }}
-          path: release/v12.1.0
+          path: ${{ matrix.download_path }}
       - name: Verify checksums and upload packages
         env:
           GH_TOKEN: ${{ github.token }}
@@ -60,4 +62,14 @@ jobs:
           test -f "${directory}/FrameDeck-Studio-v12.1.0-macOS-${ARCH}.dmg"
           test -f "${directory}/FrameDeck-Studio-v12.1.0-macOS-${ARCH}.zip"
           sha256sum -c "${directory}/SHA256SUMS-macOS-${ARCH}.txt"
-          gh release upload v12.1.0 "${directory}"/* --repo "${REPOSITORY}"
+          for file in "${directory}"/*; do
+            name="$(basename "$file")"
+            digest="sha256:$(sha256sum "$file" | cut -d ' ' -f 1)"
+            existing="$(gh api "repos/${REPOSITORY}/releases/tags/v12.1.0" --jq ".assets[] | select(.name == \"${name}\") | .digest")"
+            if [ -n "$existing" ]; then
+              test "$existing" = "$digest"
+              echo "Already uploaded and verified: $name"
+            else
+              gh release upload v12.1.0 "$file" --repo "${REPOSITORY}"
+            fi
+          done
