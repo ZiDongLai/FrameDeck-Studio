@@ -2,7 +2,7 @@
 from PyInstaller.utils.hooks import collect_all
 
 APP_NAME = "FrameDeck Studio"
-APP_VERSION = "12.0.0"
+APP_VERSION = "12.1.0"
 BUNDLE_ID = "com.zidonglai.framedeckstudio"
 
 datas = [

@@ -58,8 +58,8 @@ body:
     attributes:
       label: Package used
       options:
-        - FrameDeck-Studio-v12.0.0-macOS-arm64.dmg
-        - FrameDeck-Studio-v12.0.0-macOS-arm64.zip
+        - FrameDeck-Studio-v12.1.0-macOS-arm64.dmg
+        - FrameDeck-Studio-v12.1.0-macOS-arm64.zip
         - Source code
         - Other
     validations:

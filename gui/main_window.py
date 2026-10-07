@@ -65,7 +65,8 @@ from core.template_system import (
     template_fallback_settings,
     validate_template_document,
 )
-from core.app_paths import autosave_file
+from core.app_paths import APP_NAME, APP_VERSION, autosave_file
+from gui.about_dialog import AboutDialog
 from core.group_layout import (
     PAGINATION_CONTINUOUS,
     PAGINATION_GROUPED,
@@ -202,6 +203,8 @@ I18N_EN = {
     "载入排版模板": "Load a layout template",
     "显示或隐藏生成日志": "Show or hide the generation log",
     "更多工具": "More Tools",
+    "关于 FrameDeck Studio": "About FrameDeck Studio",
+    "关于": "About",
     "载入模板": "Load Template",
     "选择主题": "Choose Theme",
     "主题选择": "Theme Selection",
@@ -3345,7 +3348,7 @@ class MainWindow(QMainWindow):
         self.autosave_timer.timeout.connect(self.autosave_project)
         self.autosave_timer.start()
 
-        self.setWindowTitle("FrameDeck Studio · UI-05-45A FIX01")
+        self.setWindowTitle(f"{APP_NAME} · UI-05-45A FIX01")
         self.resize(1480, 920)
         self.setMinimumSize(1024, 650)
 
@@ -3458,6 +3461,10 @@ class MainWindow(QMainWindow):
         self.log_action.setCheckable(True)
         self.log_action.setChecked(False)
         self.log_action.triggered.connect(self.toggle_log_dock)
+
+    def show_about_dialog(self):
+        dialog = AboutDialog(self)
+        dialog.exec()
 
     def _install_language_runtime(self):
         """Install live translation for the main window and later dialogs."""
@@ -3966,6 +3973,8 @@ class MainWindow(QMainWindow):
         cut_images_action.triggered.connect(self.shortcut_cut_images)
         paste_images_action = QAction("粘贴图片到当前页", self)
         paste_images_action.triggered.connect(self.paste_images_to_current_page)
+        about_action = QAction("关于 FrameDeck Studio", self)
+        about_action.triggered.connect(self.show_about_dialog)
         self.more_tools_menu.addAction(copy_images_action)
         self.more_tools_menu.addAction(cut_images_action)
         self.more_tools_menu.addAction(paste_images_action)
@@ -3973,6 +3982,8 @@ class MainWindow(QMainWindow):
         self.more_tools_menu.addAction(recent_action)
         self.more_tools_menu.addAction(template_action)
         self.more_tools_menu.addAction(log_action)
+        self.more_tools_menu.addSeparator()
+        self.more_tools_menu.addAction(about_action)
 
         self.more_tools_button = QToolButton(self)
         self.more_tools_button.setObjectName("PanelMenuButton")

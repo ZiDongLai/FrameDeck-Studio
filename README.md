@@ -47,7 +47,7 @@ It is suitable for:
 
 ![FrameDeck Studio English interface](assets/screenshots/framedeck-interface-en.png)
 
-## v12.0.0 highlights
+## v12.1.0 highlights
 
 - Auto Layout continuously fills the current rows × columns grid.
 - Confirm Layout keeps the generated page boundaries so later edits do not
@@ -60,7 +60,7 @@ It is suitable for:
 
 ## Downloads / 下载
 
-Download the Windows and macOS packages from the unified [v12.0.0 GitHub Release](https://github.com/lzy4107932-commits/FrameDeck-Studio/releases/tag/v12.0.0).
+Download the Windows and macOS packages from the unified [v12.1.0 GitHub Release](https://github.com/lzy4107932-commits/FrameDeck-Studio/releases/tag/v12.1.0) after it is published.
 
 ### Windows
 

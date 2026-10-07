@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 APP_NAME = "FrameDeck Studio"
-APP_VERSION = "12.0"
+APP_VERSION = "12.1.0"
 
 
 def bundled_root() -> Path:

@@ -1,4 +1,4 @@
-# FrameDeck Studio v12.0.0 macOS Beta 1
+# FrameDeck Studio v12.1.0 macOS Beta 1
 
 This is the first unsigned public macOS test build of FrameDeck Studio.
 

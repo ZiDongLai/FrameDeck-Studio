@@ -1,11 +1,11 @@
-# FrameDeck Studio v12.0.0 macOS 安装说明
+# FrameDeck Studio v12.1.0 macOS 安装说明
 
 ## 适用范围
 
 当前安装包：
 
-- `FrameDeck-Studio-v12.0.0-macOS-arm64.dmg`
-- `FrameDeck-Studio-v12.0.0-macOS-arm64.zip`
+- `FrameDeck-Studio-v12.1.0-macOS-arm64.dmg`
+- `FrameDeck-Studio-v12.1.0-macOS-arm64.zip`
 
 仅适用于 Apple Silicon 芯片的 Mac，例如 M1、M2、M3、M4。Intel Mac 暂不支持。
 
@@ -27,7 +27,7 @@ uname -m
 
 ## 使用 DMG 安装
 
-1. 双击 `FrameDeck-Studio-v12.0.0-macOS-arm64.dmg`。
+1. 双击 `FrameDeck-Studio-v12.1.0-macOS-arm64.dmg`。
 2. 在打开的安装窗口中，将 `FrameDeck Studio.app` 拖入 `Applications`（应用程序）文件夹。
 3. 等待复制完成。
 4. 在 Finder 左侧推出 FrameDeck Studio 安装镜像。

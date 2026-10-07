@@ -1,5 +1,5 @@
 #define MyAppName "FrameDeck Studio"
-#define MyAppVersion "12.0.0"
+#define MyAppVersion "12.1.0"
 #define MyAppPublisher "紫东来"
 #define MyAppExeName "FrameDeck Studio V12 Stable.exe"
 
@@ -11,7 +11,7 @@ AppPublisher={#MyAppPublisher}
 DefaultDirName={autopf}\FrameDeck Studio
 DefaultGroupName=FrameDeck Studio
 OutputDir=output
-OutputBaseFilename=FrameDeck-Studio-v12.0.0-Windows-x64-Setup
+OutputBaseFilename=FrameDeck-Studio-v12.1.0-Windows-x64-Setup
 SetupIconFile=..\resources\icon.ico
 LicenseFile=..\LICENSE
 Compression=lzma2

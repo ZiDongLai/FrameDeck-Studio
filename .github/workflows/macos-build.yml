@@ -66,8 +66,8 @@ jobs:
       - name: Upload unsigned beta packages
         uses: actions/upload-artifact@v4
         with:
-          name: FrameDeck-Studio-v12.0.0-macOS-${{ runner.arch }}-unsigned-beta
-          path: release/v12.0.0/macos-*/**
+          name: FrameDeck-Studio-v12.1.0-macOS-${{ runner.arch }}-unsigned-beta
+          path: release/v12.1.0/macos-*/**
           if-no-files-found: error
           retention-days: 30
       - name: Publish GitHub pre-release
@@ -75,9 +75,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "${GITHUB_REF_NAME}" release/v12.0.0/macos-*/* \
+          gh release create "${GITHUB_REF_NAME}" release/v12.1.0/macos-*/* \
             --repo "${GITHUB_REPOSITORY}" \
-            --title "FrameDeck Studio v12.0.0 macOS Beta 1" \
+            --title "FrameDeck Studio v12.1.0 macOS Beta 1" \
             --notes-file MACOS_BETA_RELEASE_NOTES.md \
             --prerelease \
             --verify-tag

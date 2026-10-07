@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-VERSION="12.0.0"
+VERSION="12.1.0"
 APP_NAME="FrameDeck Studio"
 ARCH="$(uname -m)"
 OUTPUT_DIR="release/v${VERSION}/macos-${ARCH}"
